@@ -1,0 +1,117 @@
+########################
+# Filled Code
+########################
+# ../codes/VAE/VAE.py:1
+        self.enc_1 = nn.Conv2d(self.num_channels, 16, (3,3), 1, 1)
+        self.enc_2 = nn.Conv2d(16, 32, (3,3), 2, 1)
+        self.enc_3 = nn.Conv2d(32, 32, (3,3), 1, 1)
+        self.enc_4 = nn.Conv2d(32, 16, (3,3), 2, 1)
+        self.enc_5 = nn.Linear(16 * 8 * 8, 2 * self.latent_dim)
+        self.enc_6 = nn.Linear(2 * self.latent_dim, 2 * self.latent_dim)
+
+        self.dec_1 = nn.Linear(self.latent_dim, self.latent_dim)
+        self.dec_2 = nn.Linear(self.latent_dim, 16 * 8 * 8)
+        self.dec_3 = nn.ConvTranspose2d(16, 32, (3,3), 2, 1, 1)
+        self.dec_4 = nn.ConvTranspose2d(32, 32, (3,3), 1, 1, 0)
+        self.dec_5 = nn.ConvTranspose2d(32, 16, (3,3), 2, 1, 1)
+        self.dec_6 = nn.ConvTranspose2d(16, 1, (3,3), 1, 1, 0)
+
+# ../codes/VAE/VAE.py:2
+        # reference: https://shenxiaohai.me/2018/10/20/pytorch-tutorial-advanced-02/
+        std = torch.clip(torch.exp(log_var), -1e32, 1e32)
+        eps = torch.randn_like(std)
+        sampled_z = mu + eps * std
+
+# ../codes/VAE/VAE.py:3
+            x = F.relu(self.enc_1(x))
+            x = F.relu(self.enc_2(x))
+            x = F.relu(self.enc_3(x))
+            x = F.relu(self.enc_4(x))
+            x = x.reshape(x.size()[0], 16 * 8 * 8)
+            x = F.relu(self.enc_5(x))
+            x = self.enc_6(x)
+            x = x.reshape(x.size()[0], 2, self.latent_dim)
+            mu = x[:,0,:]
+            log_var = x[:, 1, :]
+            z = self.reparameterize(mu, log_var)
+            z = F.relu(self.dec_1(z))
+            z = self.dec_2(z)
+            z = z.reshape(z.size()[0], 16, 8, 8)
+            z = F.relu(self.dec_3(z))
+            z = F.relu(self.dec_4(z))
+            z = F.relu(self.dec_5(z))
+            recon_x = F.sigmoid(self.dec_6(z))
+
+# ../codes/VAE/VAE.py:4
+            z = F.relu(self.dec_1(z))
+            z = self.dec_2(z)
+            z = z.reshape(z.size()[0], 16, 8, 8)
+            z = F.relu(self.dec_3(z))
+            z = F.relu(self.dec_4(z))
+            z = F.relu(self.dec_5(z))
+            gen_x = torch.sigmoid(self.dec_6(z))
+
+# ../codes/VAE/trainer.py:1
+        batch_size = target.size()[0]
+        kl_loss = torch.sum((mu**2 + torch.clip(torch.exp(log_var)**2, -1e32, 1e32) - 2 * log_var - 1) / 2) / batch_size
+        recon_loss = torch.sum((- target * torch.log(recon) - (1 - target) * torch.log(1 - recon))) / batch_size
+
+# ../codes/GAN/trainer.py:1
+        output1 = self._netD(real_imgs)
+        loss_D_real = BCE_criterion(output1, torch.full((output1.size(0), ), 1, dtype=torch.float, device=self._device))
+        loss_D_real.backward()
+        D_x = torch.mean(output1).item()
+
+# ../codes/GAN/trainer.py:2
+        output2 = self._netD(fake_imgs.detach())
+        D_G_z1 = torch.mean(output2).item()
+        loss_D_fake = BCE_criterion(output2, torch.full((output2.size(0), ), 0, dtype=torch.float, device=self._device))
+        loss_D_fake.backward()
+        loss_D = loss_D_fake + loss_D_real
+
+# ../codes/GAN/trainer.py:3
+        output3 = self._netD(fake_imgs)
+        loss_G = BCE_criterion(output3, torch.full((output3.size(0), ), 1, dtype=torch.float, device=self._device))
+        D_G_z2 = torch.mean(output3).item()
+
+# ../codes/GAN/GAN.py:1
+            nn.ConvTranspose2d(self.latent_dim, self.hidden_dim * 4, 4, 1, 0),
+            nn.BatchNorm2d(4 * self.hidden_dim),
+            nn.ReLU(True),
+            nn.ConvTranspose2d(self.hidden_dim * 4, self.hidden_dim * 2, 4, 2, 1),
+            nn.BatchNorm2d(2 * self.hidden_dim),
+            nn.ReLU(True),
+            nn.ConvTranspose2d(self.hidden_dim * 2, self.hidden_dim, 4, 2, 1),
+            nn.BatchNorm2d(self.hidden_dim),
+            nn.ReLU(True),
+            nn.ConvTranspose2d(self.hidden_dim, 1, 4, 2, 1),
+            nn.Tanh(),
+
+
+########################
+# References
+########################
+
+########################
+# Other Modifications
+########################
+# _codes/VAE/VAE.py -> ../codes/VAE/VAE.py
+# 2 + import torch.nn.functional as F
+# 6 -     def __init__(self, num_channals, latent_dim):
+# 6 ?                                 ^
+# 7 +     def __init__(self, num_channels, latent_dim):
+# 7 ?                                 ^
+# 8 -         self.num_channals = num_channals
+# 8 ?                       ^              ^
+# 9 +         self.num_channels = num_channels
+# 9 ?                       ^              ^
+# _codes/GAN/main.py -> ../codes/GAN/main.py
+# 18 -     parser.add_argument('--generator_hidden_dim', default=16, type=int)
+# 18 ?                                                            ^
+# 18 +     parser.add_argument('--generator_hidden_dim', default=100, type=int)
+# 18 ?                                                            ^^
+# _codes/GAN/trainer.py -> ../codes/GAN/trainer.py
+# 83 -         return loss_D_real + loss_D_fake, loss_G, D_x, D_G_z1, D_G_z2
+# 83 ?                      -------------------
+# 87 +         return loss_D, loss_G, D_x, D_G_z1, D_G_z2
+

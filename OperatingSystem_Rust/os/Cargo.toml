@@ -1,0 +1,20 @@
+[package]
+name = "os"
+version = "0.1.0"
+authors = ["shinbokuow"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bit_field = "0.9.0"
+riscv = { git = "https://github.com/rcore-os/riscv", features = ["inline-asm"] }
+spin = "0.5.2"
+buddy_system_allocator = "0.3"
+xmas-elf = "0.6"
+rcore-fs = { git = "https://github.com/rcore-os/rcore-fs", rev = "00096ec"  }
+rcore-fs-sfs = { git = "https://github.com/rcore-os/rcore-fs", rev = "00096ec"  }
+
+[dependencies.lazy_static]
+version = "1.0"
+features = ["spin_no_std"]

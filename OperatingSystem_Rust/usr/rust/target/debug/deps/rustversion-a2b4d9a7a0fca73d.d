@@ -1,0 +1,12 @@
+/Users/li-dx/Desktop/Code/OS/Lab/os/usr/rust/target/debug/deps/librustversion-a2b4d9a7a0fca73d.dylib: /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/lib.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/attr.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/bound.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/date.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/expr.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/time.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/version.rs /Users/li-dx/Desktop/Code/OS/Lab/os/usr/rust/target/debug/build/rustversion-26c88f761ef10926/out/version.rs
+
+/Users/li-dx/Desktop/Code/OS/Lab/os/usr/rust/target/debug/deps/rustversion-a2b4d9a7a0fca73d.d: /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/lib.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/attr.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/bound.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/date.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/expr.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/time.rs /Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/version.rs /Users/li-dx/Desktop/Code/OS/Lab/os/usr/rust/target/debug/build/rustversion-26c88f761ef10926/out/version.rs
+
+/Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/lib.rs:
+/Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/attr.rs:
+/Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/bound.rs:
+/Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/date.rs:
+/Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/expr.rs:
+/Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/time.rs:
+/Users/li-dx/.cargo/registry/src/github.com-1ecc6299db9ec823/rustversion-1.0.2/src/version.rs:
+/Users/li-dx/Desktop/Code/OS/Lab/os/usr/rust/target/debug/build/rustversion-26c88f761ef10926/out/version.rs:

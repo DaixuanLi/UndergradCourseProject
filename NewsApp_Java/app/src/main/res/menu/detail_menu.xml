@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_add_favorite"
+        android:icon="@drawable/ic_star_border_black_24dp"
+        android:title="@string/favorite"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_share"
+        android:icon="?attr/actionModeShareDrawable"
+        android:title="@string/menu_share"
+        app:showAsAction="ifRoom" />
+</menu>

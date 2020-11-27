@@ -1,0 +1,309 @@
+########################
+# Additional Files
+########################
+# utils.pyc
+# .DS_Store
+# network.pyc
+# __pycache__
+# data
+
+########################
+# Filled Code
+########################
+# ../codes/layers.py:1
+        grad = np.ones_like(input, np.float32)
+        grad[input <  0] = 0.0
+        self._saved_for_backward(grad)
+        input[input < 0] = 0.0
+        return input
+
+# ../codes/layers.py:2
+        return grad_output * self._saved_tensor
+
+# ../codes/layers.py:3
+        ret = 1 / (1 - np.exp(-input))
+        self._saved_for_backward(ret)
+        return ret
+
+# ../codes/layers.py:4
+        inp = self._saved_tensor
+        return inp * (1 - inp) * grad_output
+
+# ../codes/layers.py:5
+        self._saved_for_backward(input)
+        return 0.5 * input * (1 + np.tanh(self.c1 * (input + self.c0 * (input**3))))
+
+# ../codes/layers.py:6
+        u = self._saved_tensor
+        in_tanh = self.c1 * (u + self.c0 * (u**3))
+        result = np.ones_like(in_tanh) * grad_output
+        v = (-74 <= in_tanh) & (in_tanh <= 74)
+        result[v] *= 0.5 * (1 + self.tanh(in_tanh[v])) + 0.5 * u[v] * (self.grad_tanh(in_tanh[v ])) * (self.c1 * (1 + 3 * self.c0 * u[v ] * u[v ]))
+        return result
+
+# ../codes/layers.py:7
+        self._saved_for_backward(input)
+        if self.act_layer:
+            return self.act_layer.forward(np.matmul(input, self.W) + self.b)
+        else:
+            return np.matmul(input, self.W) + self.b
+
+# ../codes/layers.py:8
+        inp = self._saved_tensor
+        grad = grad_output
+        if self.act_layer:
+            grad = self.act_layer.backward(grad)
+        # print("*** in backward ***")
+        # print(grad)
+        self.grad_b = np.sum(grad, axis=0) # sum by batch ?
+        # print(self.grad_b)
+        self.grad_W = np.matmul(inp.T, grad)
+        # print(self.grad_W)
+        grad = np.matmul(grad, self.W.T)
+        # print(grad)
+        # print("*** out backward ***")
+        return grad
+
+# ../codes/loss.py:1
+        # 对input先进行归一化，再带入target计算
+        max_ = np.max(input, axis=1, keepdims=True)
+        softmax_input = input - max_
+        softmax_input = np.exp(softmax_input)
+        softmax_input = softmax_input / np.sum(softmax_input, axis=1, keepdims=True)
+        self.loss = loss = np.mean(np.sum((softmax_input - target) ** 2, axis=1)) / 2
+        return loss
+
+# ../codes/loss.py:2
+        batch_size = input.shape[0]
+        max_ = np.max(input, axis=1, keepdims=True)
+        softmax_input = input - max_
+        softmax_input = np.exp(softmax_input)
+        softmax_input = softmax_input / np.sum(softmax_input, axis=1, keepdims=True)
+        self.grad = grad = 1 / batch_size * softmax_input * (softmax_input - target - np.sum(softmax_input * (softmax_input - target), axis=1, keepdims=True)) # ?
+        return grad
+
+# ../codes/loss.py:3
+        max_ = np.max(input, axis=1, keepdims=True)
+        softmax_input = input - max_
+        softmax_input = np.exp(softmax_input)
+        softmax_input = softmax_input / np.sum(softmax_input, axis=1, keepdims=True)
+        clip = np.clip(softmax_input, 1e-32, 1e32)
+        self.loss = loss = -np.mean(np.sum(target * np.log(clip), axis=1))
+        return loss
+
+# ../codes/loss.py:4
+        max_ = np.max(input, axis=1, keepdims=True)
+        softmax_input = input - max_
+        softmax_input = np.exp(softmax_input)
+        softmax_input = softmax_input / np.sum(softmax_input, axis=1, keepdims=True)
+        clip = np.clip(softmax_input, 1e-32, 1e32)
+        batch_size = input.shape[0]
+        self.grad = grad = 1 / batch_size * (-target + clip)
+        return grad
+
+# ../codes/loss.py:5
+        max_ = np.max(input, axis=1, keepdims=True)
+        softmax_input = input - max_
+        softmax_input = np.exp(softmax_input)
+        softmax_input = softmax_input / np.sum(softmax_input, axis=1, keepdims=True)
+        minus = softmax_input[target == 1.0][:, np.newaxis]
+        loss = np.ones_like(target) * self.Delta - minus + softmax_input
+        loss[target == 1.0] = 0
+        loss[loss < 0] = 0
+        loss = np.sum(loss)
+        self.loss = loss
+        return loss
+
+# ../codes/loss.py:6
+        max_ = np.max(input, axis=1, keepdims=True)
+        softmax_input = input - max_
+        softmax_input = np.exp(softmax_input)
+        softmax_input = softmax_input / np.sum(softmax_input, axis=1, keepdims=True)
+        minus = softmax_input[target == 1.0][:, np.newaxis]
+        loss = np.ones_like(target) * self.Delta - minus + softmax_input
+        loss[target == 1.0] = 0
+        v1 = 1 * (loss > 0)
+        v2 = -1 * np.sum(v1, axis=1, keepdims=True)
+        batch_size = input.shape[0]
+        grad = 1 / batch_size * (v2 * target + v1)
+        self.grad = grad = - np.sum(grad * softmax_input, axis=1, keepdims=True) * softmax_input + softmax_input * grad
+        return grad
+
+
+########################
+# References
+########################
+
+########################
+# Other Modifications
+########################
+# _codes/solve_net.py -> ../codes/solve_net.py
+# 15 - def train_net(model, loss, config, inputs, labels, batch_size, disp_freq):
+# 15 + def train_net(model, loss, config, inputs, labels, batch_size, disp_freq, test_inputs, test_labels):
+# 15 ?                                                                         ++++++++++++++++++++++++++
+# 18 -     loss_list = []
+# 19 -     acc_list = []
+# 18 +     train_loss_list, train_acc_list = [], []
+# 19 +     test_loss_list, test_acc_list = [], []
+# 20 +     # loss_list, acc_list = [], []
+# 23 +         # train_loss_value, train_acc_value = test_net(model, loss, input, labels, 10000000)
+# 24 +         # train_loss_list.append(train_loss_value)
+# 25 +         # train_acc_list.append(train_acc_value)
+# 26 +
+# 27 +         test_loss_value, test_acc_value = test_net(model, loss, test_inputs, test_labels, 10000000)
+# 28 +         test_loss_list.append(test_loss_value)
+# 29 +         test_acc_list.append(test_acc_value)
+# 30 +
+# 38 -         loss_list.append(loss_value)
+# 47 +         # loss_list.append(loss_value)
+# 47 ?        ++
+# 39 -         acc_list.append(acc_value)
+# 48 +         # acc_list.append(acc_value)
+# 48 ?        ++
+# 50 +         train_loss_list.append(loss_value)
+# 51 +         train_acc_list.append(acc_value)
+# 52 +
+# 41 -         if iter_counter % disp_freq == 0:
+# 53 +         # if iter_counter % disp_freq == 0:
+# 53 ?        ++
+# 42 -             msg = '  Training iter %d, batch loss %.4f, batch acc %.4f' % (iter_counter, np.mean(loss_list), np.mean(acc_list))
+# 54 +         #     msg = '  Training iter %d, batch loss %.4f, batch acc %.4f' % (iter_counter, np.mean(loss_list), np.mean(acc_list))
+# 54 ?        ++
+# 43 -             loss_list = []
+# 55 +         #     loss_list = []
+# 55 ?        ++
+# 44 -             acc_list = []
+# 56 +         #     acc_list = []
+# 56 ?        ++
+# 45 -             LOG_INFO(msg)
+# 57 +         #     LOG_INFO(msg)
+# 57 ?        ++
+# 58 +
+# 59 +
+# 60 +     return train_loss_list, train_acc_list, test_loss_list, test_acc_list
+# 48 - def test_net(model, loss, inputs, labels, batch_size):
+# 63 + def test_net(model, loss, inputs, labels, batch_size, verbose=False):
+# 63 ?                                                     +++++++++++++++
+# 59 -
+# 74 +     if verbose:
+# 60 -     msg = '    Testing, total mean loss %.5f, total acc %.5f' % (np.mean(loss_list), np.mean(acc_list))
+# 75 +         msg = '    Testing, total mean loss %.5f, total acc %.5f' % (np.mean(loss_list), np.mean(acc_list))
+# 75 ? ++++
+# 61 -     LOG_INFO(msg)
+# 76 +         LOG_INFO(msg)
+# 76 ? ++++
+# 77 +     return np.mean(loss_list), np.mean(acc_list)
+# _codes/utils.py -> ../codes/utils.py
+# 5 -
+# 5 + import seaborn as sns
+# 6 + import matplotlib.pyplot as plt
+# 7 + from matplotlib.backends.backend_pdf import PdfPages
+# 8 + from pandas.core.frame import DataFrame
+# _codes/layers.py -> ../codes/layers.py
+# 67 +         self.c0 = 0.044715
+# 68 +         self.c1 = np.sqrt(2.0 / np.pi)
+# 88 +     def tanh(self, x):
+# 89 +         a = np.exp(x)
+# 90 +         b = np.exp(-x)
+# 91 +         return (a-b) / (a+b)
+# 92 +
+# 93 +     def grad_tanh(self, x):
+# 94 +         a = np.exp(x)
+# 95 +         b = np.exp(-x)
+# 96 +         return 4 / ((a+b)**2)
+# 97 +
+# 98 +
+# 74 -     def __init__(self, name, in_num, out_num, init_std):
+# 100 +     def __init__(self, name, in_num, out_num, init_std, act_type, act_name):
+# 100 ?                                                       ++++++++++++++++++++
+# 113 +         self.act = act_type
+# 114 +         self.act_name = act_name
+# 115 +         try:
+# 116 +             assert self.act in ['sigmoid', 'relu', 'gelu', None]
+# 117 +         except:
+# 118 +             raise ValueError("supported activation type: sigmoid, relu, gelu and None.")
+# 119 +         if self.act == 'sigmoid':
+# 120 +             self.act_layer = Sigmoid(self.act_name)
+# 121 +         elif self.act == 'relu':
+# 122 +             self.act_layer = Relu(self.act_name)
+# 123 +         elif self.act == 'gelu':
+# 124 +             self.act_layer = Gelu(self.act_name)
+# 125 +         else:
+# 126 +             self.act_layer = None
+# 127 +
+# 167 +
+# 168 + # # test code
+# 169 + # test = Gelu("test")
+# 170 + # v = np.array([1.0, 2.0, 3.0, 4.0])
+# 171 + # delta_v = np.array([1e-5, 1e-5, 1e-5, 1e-5])
+# 172 + # print("test begin")
+# 173 + # print(test.forward(v))
+# 174 + # print(test.backward([1,1,1,1]))
+# 175 + # print((test.forward(v + delta_v) - test.forward(v)) / delta_v)
+# 176 +
+# 177 + # # failed test
+# 178 + # # test = Linear("test",4 , 8, 1, 'relu', "test_act")
+# 179 + # # v = np.array([[1.0,2.0,3.0,4.0], [2.0,4.0,6.0,8.0]])
+# 180 + # # grad_v = np.array([[1.0, 1.0, 1.0, 1.0], [1.0, 1.0, 1.0, 1.0]])
+# 181 + # # print(test.forward(v))
+# 182 + # # print(test.backward(grad_v))
+# _codes/run_mlp.py -> ../codes/run_mlp.py
+# 7 + import time
+# 8 -
+# 9 + NAME = "2layersGelu.Cross"
+# 14 - model.add(Linear('fc1', 784, 10, 0.01))
+# 14 ?                     ^        ^
+# 15 + model.add(Linear('fc0', 784, 500, 0.01, 'gelu', 'act0'))
+# 15 ?                     ^        ^^       ++++++++++++++++
+# 16 + model.add(Linear('fc1', 500, 256, 0.01, 'gelu', 'act1'))
+# 17 + model.add(Linear('fc2', 256, 10,  0.01, None,   'act2'))
+# 16 - loss = EuclideanLoss(name='loss')
+# 19 + loss = SoftmaxCrossEntropyLoss(name='loss')
+# 25 -     'learning_rate': 0.0,
+# 25 ?                        ^
+# 28 +     'learning_rate': 0.1,
+# 28 ?                        ^
+# 26 -     'weight_decay': 0.0,
+# 29 +     'weight_decay': 0.0005,
+# 29 ?                        +++
+# 27 -     'momentum': 0.0,
+# 27 ?                   ^
+# 30 +     'momentum': 0.9,
+# 30 ?                   ^
+# 28 -     'batch_size': 100,
+# 28 ?                   ^
+# 31 +     'batch_size': 500,
+# 31 ?                   ^
+# 29 -     'max_epoch': 100,
+# 29 ?                  ^^
+# 32 +     'max_epoch': 50,
+# 32 ?                  ^
+# 34 -
+# 37 + start_time = time.time()
+# 38 + train_loss_list, train_acc_list = [], []
+# 39 + test_loss_list, test_acc_list = [], []
+# 42 +
+# 43 +
+# 37 -     train_net(model, loss, config, train_data, train_label, config['batch_size'], config['disp_freq'])
+# 44 +     tr_l, tr_ac, te_l, te_ac = train_net(model, loss, config, train_data, train_label, config['batch_size'], config['disp_freq'], test_data, test_label)
+# 44 ?    +++++++++++++++++++++++++++                                                                                                  +++++++++++++++++++++++
+# 45 +     train_loss_list += tr_l
+# 46 +     train_acc_list += tr_ac
+# 47 +     test_loss_list += te_l
+# 48 +     test_acc_list += te_ac
+# 51 +         print('\n')
+# 41 -         test_net(model, loss, test_data, test_label, config['batch_size'])
+# 53 +         t_l, t_ac = test_net(model, loss, test_data, test_label, config['batch_size'])
+# 53 ?        ++++++++++++
+# 54 +         print("loss:{}, acc:{}".format(str(t_l),str(t_ac)))
+# 55 +         # print("loss:{}, acc:{}".format(str(test_loss_list[-1]),str(test_acc_list[-1])))
+# 56 +         print('\n')
+# 57 + print("\n")
+# 58 + print("time consumed:", str(time.time() - start_time))
+# 59 + print('Best Test Acc:{}'.format(str(max(test_acc_list))))
+# _codes/loss.py -> ../codes/loss.py
+# 40 -     def __init__(self, name, threshold=0.05):
+# 40 ?                                          -
+# 65 +     def __init__(self, name, threshold=0.5):
+# 67 +         self.Delta = threshold
+

@@ -1,0 +1,509 @@
+[33mcommit 13a82050e140b6e90eea7d9b340084839d5319de[m[33m ([m[1;36mHEAD -> [m[1;32mgyx-load-store[m[33m)[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Wed Nov 20 00:37:05 2019 +0800
+
+    load store code finish, begin debugging
+
+[33mcommit d2921ade87777c63ae5f0efb9d935977fb5366e7[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m
+Merge: 39c5f02 3cd4975
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Tue Nov 19 21:11:47 2019 +0800
+
+    Merge branch 'gyx-transfer' into dev
+
+[33mcommit 3cd49752418f8f3a390dea18ace85cfd889e1f9a[m[33m ([m[1;32mgyx-transfer[m[33m)[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Tue Nov 19 21:09:51 2019 +0800
+
+    branch and jump instructions finish, but jal still needs test
+
+[33mcommit 24010b472420266c496e70ccc265871f969096d0[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Tue Nov 19 17:22:03 2019 +0800
+
+    jump instruction finish
+
+[33mcommit 08445a5069c09204d4f387ccebed40edeb0abc14[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Tue Nov 19 12:11:14 2019 +0800
+
+    branch finish id_ex
+
+[33mcommit 5a97b4ca3f5f718269d486f5a47a02cb7a8ea3c5[m[33m ([m[1;31morigin/gyx-transfer[m[33m)[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Tue Nov 19 11:14:36 2019 +0800
+
+    working on branch
+
+[33mcommit 187eb6fa0aac95619c98259bb991632b0d58c836[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Tue Nov 19 10:41:16 2019 +0800
+
+    add ctrl module
+
+[33mcommit 39c5f023a315b78f5767cdb0fe277bcf7248fe9b[m
+Merge: 385baa3 97f7abb
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Mon Nov 18 23:54:08 2019 +0800
+
+    Merge branch 'gyx-mov' into dev
+
+[33mcommit 97f7abb77de1fdd2dffbc8abc88b57c141092f92[m[33m ([m[1;32mgyx-mov[m[33m)[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Mon Nov 18 23:53:47 2019 +0800
+
+    movn instruction finish
+
+[33mcommit 385baa32432194a7c8272a60c0134b5d91e5aef7[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Mon Nov 18 21:33:08 2019 +0800
+
+    Merge to dev
+
+[33mcommit d63c17f1b06cf3acdf083bff4924233dc7d0267d[m
+Merge: 1788dbf 867ffe7
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sun Nov 17 23:48:38 2019 +0800
+
+    Merge branch 'gyx-logic-inst' into dev
+
+[33mcommit 867ffe7a20e114a389fa50097124dddd6d416d7c[m[33m ([m[1;32mgyx-logic-inst[m[33m)[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sun Nov 17 23:47:54 2019 +0800
+
+    logic operation and shift operation finished.
+     But may be not fully tested
+
+[33mcommit 5e2f3f46ac874354b4f966a7a9a748b5d2f44e3b[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sun Nov 17 18:33:38 2019 +0800
+
+    finish data push forward
+
+[33mcommit 1788dbfe40f0720b28bd6907e44c4172d65cd6e8[m
+Merge: 957ad0e 222a31a
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sun Nov 17 17:41:47 2019 +0800
+
+    Merge branch 'gyx-pipline-ram' into dev
+
+[33mcommit 222a31af603e45b16914d6eba9a4fc48131442ff[m[33m ([m[1;32mgyx-pipline-ram[m[33m)[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sun Nov 17 17:41:25 2019 +0800
+
+    add inst ram, maybe usefull
+
+[33mcommit e60d6d4507f5f973ef98ce616519a7caaabe232f[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sun Nov 17 17:39:38 2019 +0800
+
+    read instruction from base ram OK.
+    pipeline framework finish
+
+[33mcommit d12ec876884c37f30ffec3c341360dce9b79a914[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sun Nov 17 13:33:39 2019 +0800
+
+    base ram can read data from file
+
+[33mcommit 957ad0e03ff9f632f93aea46fa5eb75f8bb98a8a[m
+Merge: 0b4af96 4d5a74c
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sun Nov 17 11:40:56 2019 +0800
+
+    Merge branch 'gyx' into dev
+
+[33mcommit 4d5a74c7d5283aa8bc3f62c747c18465be4086e4[m[33m ([m[1;32mgyx[m[33m)[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sun Nov 17 11:39:30 2019 +0800
+
+    ori operation pipeline OK, working on fetch instruction from ram
+
+[33mcommit c0e94eee7ae6f4ae303b3dbdac06095d93a1106b[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sat Nov 16 17:53:52 2019 +0800
+
+    connect the modules. Finish coding, beginning debugging
+
+[33mcommit cd6b4121e228f37b2cfb1c75d6b505292c4495b0[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sat Nov 16 15:58:07 2019 +0800
+
+    mem to wb module finish
+
+[33mcommit d1b1ff55f5fb2e5676a4a29f67c0dbca38b9d7d0[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sat Nov 16 15:49:58 2019 +0800
+
+    mem module inish
+
+[33mcommit 698c519a2d130fb48cc0f4ddd76c3333abd9fccb[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sat Nov 16 15:40:49 2019 +0800
+
+    exe to mem finish
+
+[33mcommit aaa5faf4eefe9b84d4a73387c6324e5de12d00e5[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sat Nov 16 15:30:00 2019 +0800
+
+    exe module finish
+
+[33mcommit 60b7fc4514e77110fb69c1aca55bca38cc9a28e1[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sat Nov 16 14:40:13 2019 +0800
+
+    add id to ex module
+
+[33mcommit 23526b15f9a78d0427dcb529a282b2156f803b7c[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Sat Nov 16 14:29:11 2019 +0800
+
+    decoder complete
+
+[33mcommit 3bdcee5779dfcdf7df819c3d163beda71eaab7cf[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Nov 15 11:46:27 2019 +0800
+
+    finish reg file
+
+[33mcommit e35170bd5730f44b621bdef6b74c94021f734588[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Nov 15 11:01:55 2019 +0800
+
+    IF_ID OK
+
+[33mcommit 0b4af96ed3bf39274c896a2913cf7b82c91d6d73[m
+Merge: a44c32c 5ed0065
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Nov 15 10:23:01 2019 +0800
+
+    Merge branch 'gyx_framework'
+
+[33mcommit 5ed00650f8ad932dc8dc375a27abeebbb7207046[m[33m ([m[1;32mgyx_framework[m[33m)[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Thu Nov 14 00:00:15 2019 +0800
+
+    pc reg test pass. Fix top module bug
+
+[33mcommit 2ddbcd43d7e84f0a7ad2eeb5156d11720c3bc048[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Wed Nov 13 23:29:41 2019 +0800
+
+    add pc reg
+
+[33mcommit a44c32c82b0ff37ec7a7cce8d1a391657faa9fe7[m
+Merge: 46a0516 7ba9159
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Wed Nov 13 21:57:39 2019 +0800
+
+    Merge branch 'gyx_prepare'
+
+[33mcommit 7ba91593719a6db66a147ca5662ed5b750f9375b[m[33m ([m[1;32mgyx_prepare[m[33m)[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Wed Nov 13 21:57:06 2019 +0800
+
+    prepare done
+
+[33mcommit 9226ef803185cb37f7f8fd77d7649eb735075e49[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Wed Nov 13 21:44:28 2019 +0800
+
+    move alu code to a new module
+
+[33mcommit 6068cdca809989ebaa9394d55bc16b449c502956[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Wed Nov 13 21:34:24 2019 +0800
+
+    move sram to a new module
+
+[33mcommit 46a051660524385ea14dde7756699babb8187028[m
+Merge: b94488f 4dc6ab5
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Nov 1 11:24:15 2019 +0800
+
+    Merge branch 'gyx_sram'
+
+[33mcommit 4dc6ab5f7710ebd59fe539ce4ec75d0610c3f157[m[33m ([m[1;31morigin2/gyx_sram[m[33m, [m[1;31morigin/gyx_sram[m[33m, [m[1;32mgyx_sram[m[33m)[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Oct 25 23:19:02 2019 +0800
+
+    add comments and realy OK
+
+[33mcommit cc720e202f75da9f7b7667971936c241e29d61a2[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Oct 25 22:39:54 2019 +0800
+
+    seems OK
+
+[33mcommit 33c31e5fe38f0e5354a8e58a8cb69537852ab813[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Oct 25 10:49:10 2019 +0800
+
+    base sram OK
+
+[33mcommit 333e56a67c130cbc86965770aa3affd2010241e0[m
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Thu Oct 24 19:41:56 2019 +0800
+
+    remove useless comments, comment out code for ALU
+
+[33mcommit b94488fd0619cffed8fbfb6e7b033792c73bd2fe[m
+Merge: 5b1b8f5 d632653
+Author: 顾煜贤 <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Oct 11 14:45:22 2019 +0800
+
+    Merge branch 'gyx_alu'
+
+[33mcommit d632653789b6a68d225a6c29a601109150e61d93[m[33m ([m[1;31morigin2/gyx_alu[m[33m, [m[1;31morigin/gyx_alu[m[33m, [m[1;32mgyx_alu[m[33m)[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Oct 4 16:59:46 2019 +0800
+
+    really OK
+
+[33mcommit 06f0e7c299450c02f78096ad7d3b42082d6fb70d[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Fri Oct 4 12:44:10 2019 +0800
+
+    seems OK
+
+[33mcommit e0a952e4036b7f3dfd21033e86d2c7b86a2cf8e4[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Thu Oct 3 23:22:08 2019 +0800
+
+    left carry
+
+[33mcommit d7ad012845ce6e2fe91bbce2bd85f6b47e94d2b9[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Thu Oct 3 21:22:14 2019 +0800
+
+    add is OK
+
+[33mcommit 5b1b8f5fca79687fbc053058167e4a5c774cd649[m
+Author: Gu Yuxian <gu-yx17@mails.tsinghua.edu.cn>
+Date:   Thu Oct 3 11:25:08 2019 +0800
+
+    add gitignore and first sim
+
+[33mcommit 7752271a51d11391023c7fc365818177856a1e9a[m[33m ([m[1;31morigin/lnn_alu[m[33m)[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Sun Sep 8 17:04:31 2019 +0800
+
+    disable SRAM if not used
+
+[33mcommit 692a2ec72a268951eae103cc48099cb513d33a89[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Sun Sep 8 17:01:17 2019 +0800
+
+    add CPLD sim model
+
+[33mcommit fd2c66a414d2e0cf0e2db397e0456b80f604c959[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Sat Sep 7 13:58:08 2019 +0800
+
+    rm Thinpad-Cloud-SDK
+
+[33mcommit 03c22019bf1ad40275f20b7e3f6cea5ed2d99e3c[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Sat Sep 7 12:28:51 2019 +0800
+
+    capture log files
+
+[33mcommit 84626b4f93ff551a7c32c22ce8e221ef16820aaa[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Thu Sep 5 16:05:20 2019 +0800
+
+    remove test stage
+
+[33mcommit 66a84a593b53077390a793a16a83a225ad4d730d[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Tue Aug 13 17:47:13 2019 +0800
+
+    move SDK repo
+
+[33mcommit ecb3373033ee8550bd3cd0b6a0adb8ff7778a296[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Tue Aug 13 17:44:51 2019 +0800
+
+    build in docker
+
+[33mcommit dc2169e11900fb63236c400a16f3567ff077f827[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Tue Aug 13 17:40:14 2019 +0800
+
+    update CI config
+
+[33mcommit a600fed718e7e1214015ce28b1e3564454fcf1ce[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Wed Mar 13 15:38:37 2019 +0800
+
+    migrated to 2018.3
+
+[33mcommit 2f9f7869faaee47bf83260bcd609afccf4410238[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Wed Mar 13 15:38:10 2019 +0800
+
+    add initial value to time variables
+
+[33mcommit 00dfe32e204674af76df6c96ff31e7d2fe88fb44[m
+Merge: 5d1351d 7351396
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Thu Oct 11 16:42:30 2018 +0800
+
+    Merge branch 'rev.2' into rev.3
+
+[33mcommit 73513968e075e7a29685d3164bc443ad52bd0ae6[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Thu Oct 11 16:41:12 2018 +0800
+
+    add readme file
+
+[33mcommit f82090b3a7a14983a5ab64478f9c02eca919a457[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Thu Oct 11 15:18:18 2018 +0800
+
+    update thinpad-SDK
+
+[33mcommit 51722e86e28fd89c65e853afc36a5b9f4dd3ce24[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Thu Oct 11 14:40:25 2018 +0800
+
+    update project files
+
+[33mcommit 6abebaaa7c67e5d3eef18fcf13006b08b70b3c75[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Thu Oct 11 14:40:14 2018 +0800
+
+    add example of PLL
+
+[33mcommit 5a164473f30129ff82104fe83c1a71ec2674b887[m
+Author: z4yx <z4yx@users.noreply.github.com>
+Date:   Thu Oct 11 14:38:50 2018 +0800
+
+    declare signal type of clk
+
+[33mcommit f5d6a1db27a7320baa1343bac7618aaa6266bc14[m
+Author: zhang <zz593141477@gmail.com>
+Date:   Fri Oct 5 22:47:39 2018 +0800
+
+    update SDK
+
+[33mcommit e8c379a301834af592cdda1c208defbddc680759[m
+Author: zhang <zz593141477@gmail.com>
+Date:   Tue Oct 2 01:45:04 2018 +0800
+
+    test on cloud
+
+[33mcommit 777899b4d93befdba3d76f596f79723f70ad1d9e[m
+Author: zhang <zz593141477@gmail.com>
+Date:   Tue Oct 2 01:34:06 2018 +0800
+
+    add SDK for CI
+
+[33mcommit 5f948110faccd2aff47c75b3d171a73024e878ca[m
+Author: 张宇翔 <2017210832@admin.secoder.net>
+Date:   Sat Sep 29 02:56:17 2018 +0000
+
+    Update build.tcl
+
+[33mcommit 9b5cd26e9cb8bbe7328359c6a9efd5c2f41d6e5d[m
+Author: 张宇翔 <2017210832@admin.secoder.net>
+Date:   Fri Sep 28 14:36:26 2018 +0000
+
+    no IP exists in this project
+
+[33mcommit 8a08d229d919e117829b3014765d6fe2e5f1b66b[m
+Author: 张宇翔 <2017210832@admin.secoder.net>
+Date:   Fri Sep 28 14:32:54 2018 +0000
+
+    Add CI configuration
+
+[33mcommit 4736811c9b88d5291fa60566950e76dabfa97d57[m
+Author: 张宇翔 <2017210832@admin.secoder.net>
+Date:   Fri Sep 28 14:25:18 2018 +0000
+
+    Add a tcl script for CI purposes
+
+[33mcommit 16162c8c22622dd047bd37d15869516d7d481257[m
+Author: zhang <zz593141477@gmail.com>
+Date:   Sat Jun 30 10:57:22 2018 +0800
+
+    usb data port
+
+[33mcommit 5d1351ddfcb9247929e4d8c1016e9ffa2cd45ef4[m
+Author: zhang <zz593141477@gmail.com>
+Date:   Sat Jun 30 10:07:11 2018 +0800
+
+    add DPY description
+
+[33mcommit 27015b27bec19cae63bd43caf346e8caca119aba[m
+Author: zhang <zz593141477@gmail.com>
+Date:   Sat Jun 30 10:07:11 2018 +0800
+
+    add DPY description
+
+[33mcommit 82a7373ddad8a6c258c6f40eed231a77bf93efb7[m
+Author: zyx <zz593141477@gmail.com>
+Date:   Tue Mar 6 20:53:40 2018 +0800
+
+    pin assignment changes for ThinpadNG-rev.3
+
+[33mcommit 7beebc6009fb0f3848457eb459f422b61d45ec1f[m
+Author: zyx <zz593141477@gmail.com>
+Date:   Tue Mar 6 20:47:28 2018 +0800
+
+    update project file
+
+[33mcommit 5fa3dc457c55b55b797f249961620c9e838da0ff[m
+Author: zyx <zz593141477@gmail.com>
+Date:   Tue Mar 6 20:45:42 2018 +0800
+
+    flash init
+
+[33mcommit e3d93f2b5f615c8103b499618ade5c9472ae90a8[m
+Author: zyx <zz593141477@gmail.com>
+Date:   Sun Feb 11 13:51:00 2018 +0800
+
+    file clean up
+
+[33mcommit 8bc96e6063d020aca52a27e8a3e244e8e6457636[m
+Author: zyx <zz593141477@gmail.com>
+Date:   Sun Feb 11 13:48:54 2018 +0800
+
+    flash content preload
+
+[33mcommit 2ac055ea764ac3109298289a0ab5e394cca2ad6b[m
+Author: zyx <zz593141477@gmail.com>
+Date:   Sat Feb 10 22:37:52 2018 +0800
+
+    SRAM init
+
+[33mcommit a4f3499dc2447da2ea600b80950c764ca0eac147[m
+Author: zyx <zz593141477@gmail.com>
+Date:   Fri Feb 9 22:58:34 2018 +0800
+
+    add top-level simulation file
+
+[33mcommit cbd28c32fffdf95a2c1d6f2f5de9695f842c60c1[m
+Author: zyx <zz593141477@gmail.com>
+Date:   Tue Jan 16 23:34:46 2018 +0800
+
+    add files to project
+
+[33mcommit f2568477c72d76ce086cb44d1f73e4fb47d7d7bb[m
+Author: zyx <zz593141477@gmail.com>
+Date:   Sat Jan 6 16:55:58 2018 +0800
+
+    update template
+
+[33mcommit 375c9a0a25f06bc907a9338e08425e694323bab5[m
+Author: ZhangYuxiang <zz593141477@gmail.com>
+Date:   Wed Jan 3 12:06:31 2018 +0800
+
+    update comments
+
+[33mcommit cdb61f87a259137a875fa7f9867b5100aac80a97[m
+Author: ZhangYuxiang <zz593141477@gmail.com>
+Date:   Mon Jan 1 14:39:54 2018 +0800
+
+    initial project

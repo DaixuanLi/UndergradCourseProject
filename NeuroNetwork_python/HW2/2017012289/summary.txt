@@ -1,0 +1,333 @@
+########################
+# Additional Files
+########################
+# .DS_Store
+# __pycache__
+# cifar-10_data
+# imgs
+# train
+# run.sh
+
+########################
+# Filled Code
+########################
+# ../codes/mlp/model.py:1
+    # Reference: https://pytorch.org/docs/stable/index.html
+    def __init__(self, num_features, momentum:float=0.1, eps=1e-5,):
+        self.momentum = momentum
+        self.eps = eps
+        self.weight = Parameter(torch.ones(num_features))
+        self.bias = Parameter(torch.zeros(num_features))
+
+        self.register_buffer('running_mean', torch.zeros(num_features))
+        self.register_buffer('running_var', torch.ones(num_features))
+        self.register_buffer('num_batches_tracked', torch.tensor(0, dtype=torch.long))
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        self.running_mean.zero_()
+        self.running_var.fill_(1)
+        self.num_batches_tracked.zero_()
+        if self.momentum is None:
+                exponential_av = 0.0
+        else:
+                exponential_av = self.momentum
+        if self.num_batches_tracked is not None:
+                self.num_batches_tracked = self.num_batches_tracked + 1
+                if self.momentum is None:
+                        exponential_av = 1.0 / float(self.num_batches_tracked)
+                else:
+                        exponential_av = self.momentum
+        if self.training:
+                bn_training = True
+        else:
+                bn_training = (self.running_mean is None) and (self.running_var is None)
+
+        batch_mean = torch.mean(input,(0,1),keepdim=True)
+        batch_var = torch.var(input,(0,1),keepdim=True)
+        if bn_training:
+                self.running_mean = self.running_mean * (1 - exponential_av) + batch_mean * exponential_av
+                self.running_var = self.running_var * (1 - exponential_av) + batch_var * exponential_av
+        else:
+                batch_mean = self.running_mean
+                batch_var = self.running_var
+        output = (input - batch_mean) / torch.sqrt(batch_var + self.eps) * self.weight + self.bias
+        return output
+
+# ../codes/mlp/model.py:2
+        return input * torch.bernoulli((1 - self.p) * torch.ones_like(input))
+
+# ../codes/mlp/model.py:3
+        self.use_bn = use_bn
+        self.linear1 = nn.Linear(3072, 1536)
+        self.norm1 = BatchNorm1d(1)
+        self.relu1 = nn.ReLU()
+        self.dropout1 = Dropout(drop_rate)
+        self.linear2 = nn.Linear(1536, 10)
+
+# ../codes/mlp/model.py:4
+        x = self.linear1.forward(x)
+        if self.use_bn:
+            x = self.norm1.forward(x)
+        x = self.relu1.forward(x)
+        x = self.dropout1.forward(x)
+        logits = self.linear2.forward(x)
+
+# ../codes/cnn/model.py:1
+    # Reference: https://pytorch.org/docs/stable/index.html
+    def __init__(self, num_features, momentum:float=0.1, eps=1e-5, ):
+        self.momentum = momentum
+        self.eps = eps
+        self.weight = Parameter(torch.ones((1,num_features,1,1)))
+        self.bias = Parameter(torch.zeros((1,num_features,1,1)))
+        self.register_buffer('running_mean', torch.zeros((1,num_features,1,1)))
+        self.register_buffer('running_var', torch.ones((1,num_features,1,1)))
+        self.register_buffer('num_batches_tracked', torch.tensor(0, dtype=torch.long))
+        self.reset_parameters()
+    def reset_parameters(self):
+        self.running_mean.zero_()
+        self.running_var.fill_(1)
+        self.num_batches_tracked.zero_()
+
+
+    def forward(self, input):# input: [batch_size, num_feature_map, height, width]
+        if self.momentum is None:
+                exponential_av = 0.0
+        else:
+                exponential_av = self.momentum
+        if self.num_batches_tracked is not None:
+                self.num_batches_tracked = self.num_batches_tracked + 1
+                if self.momentum is None:
+                        exponential_av = 1.0 / float(self.num_batches_tracked)
+                else:
+                        exponential_av = self.momentum
+        if self.training:
+                bn_training = True
+        else:
+                bn_training = (self.running_mean is None) and (self.running_var is None)
+
+        # calculate batch_norm
+        batch_mean = torch.mean(input,(0,2,3),keepdim=True)
+        batch_var = torch.var(input,(0,2,3),keepdim=True)
+        if bn_training:
+                self.running_mean = self.running_mean * (1 - exponential_av) + batch_mean * exponential_av
+                self.running_var = self.running_var * (1 - exponential_av) + batch_var * exponential_av
+        else:
+                batch_mean = self.running_mean
+                batch_var = self.running_var
+        output = (input - batch_mean) / torch.sqrt(batch_var + self.eps) * self.weight + self.bias
+        return output
+
+# ../codes/cnn/model.py:2
+        return input * torch.bernoulli((1 - self.p) * torch.ones_like(input))
+
+# ../codes/cnn/model.py:3
+        self.use_bn = use_bn
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=10, kernel_size=(2,2))
+        self.norm1 = BatchNorm2d(10)
+        self.relu1 = nn.ReLU()
+        self.dropout1 = Dropout(drop_rate)
+        self.maxpool1 = nn.MaxPool2d(kernel_size=(2,2))
+        self.conv2 = nn.Conv2d(in_channels=10, out_channels=20, kernel_size=(2,2))
+        self.norm2 = BatchNorm2d(20)
+        self.relu2 = nn.ReLU()
+        self.dropout2 = Dropout(drop_rate)
+        self.maxpool2 = nn.MaxPool2d(kernel_size=(2,2))
+        self.linear = nn.Linear(980, 10)
+
+
+# ../codes/cnn/model.py:4
+        x = self.conv1.forward(x)
+        if self.use_bn:
+            x = self.norm1.forward(x)
+        x = self.relu1.forward(x)
+        x = self.dropout1.forward(x)
+        x = self.maxpool1.forward(x)
+        x = self.conv2.forward(x)
+        if self.use_bn:
+            x = self.norm2.forward(x)
+        x = self.relu2.forward(x)
+        x = self.dropout2.forward(x)
+        x = self.maxpool2.forward(x)
+        x = x.reshape((x.size(0),-1))
+        logits = self.linear(x)
+
+
+########################
+# References
+########################
+# https://pytorch.org/docs/stable/index.html
+
+########################
+# Other Modifications
+########################
+# _codes/mlp/main.py -> ../codes/mlp/main.py
+# 14 +
+# 15 + import seaborn as sns
+# 16 + import matplotlib.pyplot as plt
+# 17 + from matplotlib.backends.backend_pdf import PdfPages
+# 18 + from pandas.core.frame import DataFrame
+# 32 + parser.add_argument('--use_bn', type=bool, default=True,
+# 33 +     help='True to train and False to inference. Default: True')
+# 106 + def lc_plot(train_loss_list,train_acc_list,test_loss_list,test_acc_list, plot_str):
+# 107 +     iter_list = list(np.arange(0,len(train_loss_list)))+list(np.arange(0,len(test_loss_list)))
+# 108 +     type_list = ['Train']*len(train_loss_list)+['Test']*len(test_loss_list)
+# 109 +
+# 110 +     colors = ['windows blue', 'watermelon']
+# 111 +     palette = sns.xkcd_palette(colors)
+# 112 +     pdf = PdfPages('./imgs/' + plot_str + ',plot.pdf')
+# 113 +     plt.figure(figsize=(20, 6.5))
+# 114 +     sns.set(style="whitegrid")
+# 115 +
+# 116 +
+# 117 +
+# 118 +     ax1 = plt.subplot(1,2,1)
+# 119 +
+# 120 +     loss_frame = {'Epoch':iter_list,
+# 121 +                   'Loss':train_loss_list+test_loss_list,
+# 122 +                   'Dataset':type_list
+# 123 +                   }
+# 124 +     loss_frame = DataFrame(loss_frame)
+# 125 +
+# 126 +     g = sns.lineplot(x="Epoch", y="Loss", hue='Dataset', style='Dataset',
+# 127 +                      data=loss_frame, legend='full', err_style='bars', palette=palette, linewidth=2,
+# 128 +                      err_kws={'elinewidth': 2},ax=ax1)
+# 129 +
+# 130 +     plt.xticks(fontsize=12)
+# 131 +     plt.yticks(fontsize=12)
+# 132 +     plt.xlabel("Epoch", fontsize=12)
+# 133 +     plt.ylabel("Loss", fontsize=12)
+# 134 +     leg = g.legend(loc='lower left', fontsize=12)
+# 135 +     for legobj in leg.legendHandles:
+# 136 +         legobj.set_linewidth(2.0)
+# 137 +
+# 138 +
+# 139 +     ax1 = plt.subplot(1, 2, 2)
+# 140 +
+# 141 +     loss_frame = {'Epoch': iter_list,
+# 142 +                   'Acc': train_acc_list + test_acc_list,
+# 143 +                   'Dataset': type_list
+# 144 +                   }
+# 145 +     loss_frame = DataFrame(loss_frame)
+# 146 +
+# 147 +
+# 148 +     g = sns.lineplot(x="Epoch", y="Acc", hue='Dataset', style='Dataset',
+# 149 +                      data=loss_frame, legend='full', err_style='bars', palette=palette, linewidth=2,
+# 150 +                      err_kws={'elinewidth': 2}, ax=ax1)
+# 151 +
+# 152 +     plt.xticks(fontsize=12)
+# 153 +     plt.yticks(fontsize=12)
+# 154 +     plt.xlabel("Epoch", fontsize=12)
+# 155 +     plt.ylabel("Acc", fontsize=12)
+# 156 +     leg = g.legend(loc='lower right', fontsize=12)
+# 157 +     for legobj in leg.legendHandles:
+# 158 +         legobj.set_linewidth(2.0)
+# 159 +
+# 160 +
+# 161 +     pdf.savefig(bbox_inches='tight')
+# 162 +     pdf.close()
+# 163 +     plt.show()
+# 167 +     plot_str = "BatchNorm="+str(args.use_bn) +",drop=" + str(args.drop_rate) +",batch_size=" + str(args.batch_size)
+# 108 -         mlp_model = Model(drop_rate=drop_rate)
+# 174 +         mlp_model = Model(drop_rate=args.drop_rate)
+# 174 ?                                     +++++
+# 185 +         train_acc_list, train_loss_list, test_acc_list, test_loss_list = [], [], [], []
+# 190 +             train_acc_list.append(train_acc)
+# 191 +             train_loss_list.append(train_loss)
+# 194 +             test_acc_list.append(val_acc)
+# 195 +             test_loss_list.append(val_loss)
+# 222 +         lc_plot(train_loss_list, train_acc_list, test_loss_list, test_acc_list, plot_str)
+# _codes/mlp/model.py -> ../codes/mlp/model.py
+# 40 -     def __init__(self, drop_rate=0.5):
+# 74 +     def __init__(self, drop_rate=0.5, use_bn=True):
+# 74 ?                                     +++++++++++++
+# _codes/cnn/main.py -> ../codes/cnn/main.py
+# 14 +
+# 15 + import seaborn as sns
+# 16 + import matplotlib.pyplot as plt
+# 17 + from matplotlib.backends.backend_pdf import PdfPages
+# 18 + from pandas.core.frame import DataFrame
+# 32 + parser.add_argument('--use_bn', type=bool, default=True,
+# 33 +     help='True to train and False to inference. Default: True')
+# 106 + def lc_plot(train_loss_list,train_acc_list,test_loss_list,test_acc_list, plot_str):
+# 107 +     iter_list = list(np.arange(0,len(train_loss_list)))+list(np.arange(0,len(test_loss_list)))
+# 108 +     type_list = ['Train']*len(train_loss_list)+['Test']*len(test_loss_list)
+# 109 +
+# 110 +     colors = ['windows blue', 'watermelon']
+# 111 +     palette = sns.xkcd_palette(colors)
+# 112 +     pdf = PdfPages('./imgs/' + plot_str + ',plot.pdf')
+# 113 +     plt.figure(figsize=(20, 6.5))
+# 114 +     sns.set(style="whitegrid")
+# 115 +
+# 116 +
+# 117 +
+# 118 +     ax1 = plt.subplot(1,2,1)
+# 119 +
+# 120 +     loss_frame = {'Epoch':iter_list,
+# 121 +                   'Loss':train_loss_list+test_loss_list,
+# 122 +                   'Dataset':type_list
+# 123 +                   }
+# 124 +     loss_frame = DataFrame(loss_frame)
+# 125 +
+# 126 +     g = sns.lineplot(x="Epoch", y="Loss", hue='Dataset', style='Dataset',
+# 127 +                      data=loss_frame, legend='full', err_style='bars', palette=palette, linewidth=2,
+# 128 +                      err_kws={'elinewidth': 2},ax=ax1)
+# 129 +
+# 130 +     plt.xticks(fontsize=12)
+# 131 +     plt.yticks(fontsize=12)
+# 132 +     plt.xlabel("Epoch", fontsize=12)
+# 133 +     plt.ylabel("Loss", fontsize=12)
+# 134 +     leg = g.legend(loc='lower left', fontsize=12)
+# 135 +     for legobj in leg.legendHandles:
+# 136 +         legobj.set_linewidth(2.0)
+# 137 +
+# 138 +
+# 139 +     ax1 = plt.subplot(1, 2, 2)
+# 140 +
+# 141 +     loss_frame = {'Epoch': iter_list,
+# 142 +                   'Acc': train_acc_list + test_acc_list,
+# 143 +                   'Dataset': type_list
+# 144 +                   }
+# 145 +     loss_frame = DataFrame(loss_frame)
+# 146 +
+# 147 +
+# 148 +     g = sns.lineplot(x="Epoch", y="Acc", hue='Dataset', style='Dataset',
+# 149 +                      data=loss_frame, legend='full', err_style='bars', palette=palette, linewidth=2,
+# 150 +                      err_kws={'elinewidth': 2}, ax=ax1)
+# 151 +
+# 152 +     plt.xticks(fontsize=12)
+# 153 +     plt.yticks(fontsize=12)
+# 154 +     plt.xlabel("Epoch", fontsize=12)
+# 155 +     plt.ylabel("Acc", fontsize=12)
+# 156 +     leg = g.legend(loc='lower right', fontsize=12)
+# 157 +     for legobj in leg.legendHandles:
+# 158 +         legobj.set_linewidth(2.0)
+# 159 +
+# 160 +
+# 161 +     pdf.savefig(bbox_inches='tight')
+# 162 +     pdf.close()
+# 163 +     plt.show()
+# 164 +
+# 168 +     plot_str = "BatchNorm="+str(False) +",drop=" + str(args.drop_rate) +",batch_size=" + str(args.batch_size)
+# 108 -         cnn_model = Model(drop_rate=args.drop_rate)
+# 175 +         cnn_model = Model(drop_rate=args.drop_rate, use_bn=False)
+# 175 ?                                                   ++++++++++++++
+# 178 +         print(plot_str)
+# 187 +         train_acc_list, train_loss_list, test_acc_list, test_loss_list = [], [], [], []
+# 191 +             train_acc_list.append(train_acc)
+# 192 +             train_loss_list.append(train_loss)
+# 196 +             test_acc_list.append(val_acc)
+# 197 +             test_loss_list.append(val_loss)
+# 224 +         lc_plot(train_loss_list, train_acc_list, test_loss_list, test_acc_list, plot_str)
+# _codes/cnn/model.py -> ../codes/cnn/model.py
+# 40 -     def __init__(self, drop_rate=0.5):
+# 75 +     def __init__(self, drop_rate=0.5, use_bn=True):
+# 75 ?                                     +++++++++++++
+# 47 -     def forward(self, x, y=None):
+# 47 ?                                  ^
+# 95 +     def forward(self, x, y=None):
+# 95 ?                                  ^^^^
+# 60 -         return loss, acc
+# 60 ?                         -
+# 121 +         return loss, acc
+

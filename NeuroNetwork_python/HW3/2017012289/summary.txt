@@ -1,0 +1,125 @@
+########################
+# Additional Files
+########################
+# out_basic_lstm.txt
+# out_basic_gru_topp.txt
+# data
+# out_basic_rnn.txt
+# __pycache__
+# out_basic_gru.txt
+# out_3layers_gru.txt
+# log
+# main_lstm.py
+# out_basic_gru_t=0.8.txt
+# output.txt
+# main_gru.py
+# train
+# model_lstm.py
+# wordvec
+# run.sh
+# model_gru.py
+
+########################
+# Filled Code
+########################
+# ../codes/model.py:1
+            RNNCell(num_embed_units, num_units),
+            *[RNNCell(num_units, num_units) for _ in range(num_layers - 1)]
+
+
+# ../codes/model.py:2
+        # embedding = torch.zeros(batched_data["sent"].shape + tuple([self.num_embed_units]), dtype=torch.float, device=device)
+        embedding = torch.tensor(self.wordvec[sent], device=device)# shape: (batch_size, length, num_embed_units)
+
+# ../codes/model.py:3
+        temp = torch.stack(logits_per_step,dim=1)
+        ground_truth = sent[:,1:]
+        result = torch.softmax(torch.stack(logits_per_step,dim=1), dim=-1).gather(dim=-1, index=ground_truth.unsqueeze(dim=-1)).squeeze(dim=-1)
+        result = torch.log(result)
+        result[ground_truth == self.dataloader.pad_id] = 0
+        result = result.sum(dim=1)
+        result = - result / length
+        loss = result.sum()
+
+# ../codes/model.py:4
+            embedding = self.wordvec[now_token]# shape: (batch_size, num_embed_units)
+
+# ../codes/model.py:5
+                filter_value = -float("Inf")
+                prob = (logits / temperature).softmax(dim=-1)
+                sorted_logits, sorted_indices = torch.sort(prob,dim=-1)
+                culmulative_probs = torch.cumsum(sorted_logits, dim=-1)
+                rm_indeces = culmulative_probs > max_probability
+                rm_indeces[:,1:] = rm_indeces[:,:-1].clone()
+                rm_indeces[:,0] = False
+                rm_indeces = torch.zeros_like(logits, dtype=torch.bool).scatter_(dim=-1, index=sorted_indices, src=rm_indeces)
+                logits[rm_indeces] = filter_value
+                prob = (logits / temperature).softmax(dim=-1)
+                now_token = torch.multinomial(prob, 1)[:, 0]# shape: (batch_size)
+
+# ../codes/rnn_cell.py:1
+        self.ir_layer = nn.Linear(input_size, hidden_size)
+        self.iz_layer = nn.Linear(input_size, hidden_size)
+        self.in_layer = nn.Linear(input_size, hidden_size)
+        self.hr_layer = nn.Linear(hidden_size, hidden_size)
+        self.hz_layer = nn.Linear(hidden_size, hidden_size)
+        self.hn_layer = nn.Linear(hidden_size, hidden_size)
+
+# ../codes/rnn_cell.py:2
+        return torch.zeros(batch_size, self.hidden_size, device=device)
+
+# ../codes/rnn_cell.py:3
+        r = torch.sigmoid(self.ir_layer(incoming) + self.hr_layer(state))
+        z = torch.sigmoid(self.iz_layer(incoming) + self.hz_layer(state))
+        n = (self.in_layer(incoming) + r * self.hn_layer(state)).tanh()
+        output = (1 - z) * n + z * state
+        new_state = output
+
+# ../codes/rnn_cell.py:4
+        self.ii_layer = nn.Linear(input_size, hidden_size)
+        self.if_layer = nn.Linear(input_size, hidden_size)
+        self.ig_layer = nn.Linear(input_size, hidden_size)
+        self.io_layer = nn.Linear(input_size, hidden_size)
+        self.hi_layer = nn.Linear(hidden_size, hidden_size)
+        self.hf_layer = nn.Linear(hidden_size, hidden_size)
+        self.hg_layer = nn.Linear(hidden_size, hidden_size)
+        self.ho_layer = nn.Linear(hidden_size, hidden_size)
+
+# ../codes/rnn_cell.py:5
+        return torch.zeros(2, batch_size, self.hidden_size, device=device)
+
+# ../codes/rnn_cell.py:6
+        i = torch.sigmoid(self.ii_layer(incoming) + self.hi_layer(state[0]))
+        f = torch.sigmoid(self.if_layer(incoming) + self.hf_layer(state[0]))
+        g = (self.ig_layer(incoming) + self.hg_layer(state[0])).tanh()
+        o = torch.sigmoid(self.io_layer(incoming) + self.ho_layer(state[0]))
+        new_c = f * state[1] + i * g
+        new_h = o * new_c.tanh()
+        output = new_h
+
+
+########################
+# References
+########################
+
+########################
+# Other Modifications
+########################
+# _codes/model.py -> ../codes/model.py
+# 7 +
+# 8 +
+# 25 +         self.num_embed_units = num_embed_units
+# 76 -         return loss, torch.stack(logits_per_step, dim=1)
+# 88 +         return loss, temp
+# _codes/main.py -> ../codes/main.py
+# 9 +
+# 10 + from torch.utils.tensorboard import SummaryWriter
+# 11 + writer = SummaryWriter("./log/")
+# 148 +             writer.add_scalar(args.name + ':Train_Loss', train_loss, epoch)
+# 151 +             writer.add_scalar(args.name + ':Val_Loss', val_loss, epoch)
+# 152 +             writer.add_scalar(args.name + ':Val_PPL', val_ppl, epoch)
+# 153 +             writer.flush()
+# _codes/rnn_cell.py -> ../codes/rnn_cell.py
+# 65 -     def forward(self, incoming, state):
+# 81 +     def forward(self, incoming, state): # 这里state需要是(h_t-1, c_t-1)
+

@@ -1,0 +1,1 @@
+我在实现中，为BatchNorm增加了momentum选项来进⼀步提⾼计算moving average的灵活性，momentum的默认值设定为0.1，因此可能会与机判结果不同。
